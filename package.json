@@ -1,0 +1,21 @@
+{
+  "name": "stream-mvp",
+  "module": "server.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/howler": "^2.2.12",
+    "@types/tmi.js": "^1.8.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "howler": "^2.2.4",
+    "tmi.js": "^1.8.5"
+  }
+}
