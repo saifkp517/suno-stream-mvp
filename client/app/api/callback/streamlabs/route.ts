@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import { setSocketToken } from "../../token-store";
 
 export async function GET(req: NextRequest) {
     const code = req.nextUrl.searchParams.get("code");
@@ -30,7 +31,19 @@ export async function GET(req: NextRequest) {
         const { access_token } = response.data;
 
         console.log("✅ Streamlabs Access Token:", access_token);
-        return NextResponse.redirect("http://localhost:3000");
+
+        const socketRes = await axios.get("https://streamlabs.com/api/v2.0/socket/token", {
+            headers: {
+                Authorization: `Bearer ${access_token}`,
+                Accept: "application/json",
+            },
+        });
+
+        const socketToken = socketRes.data.socket_token;
+        console.log("Socket Token:", socketToken);
+        setSocketToken(socketToken);
+
+        return NextResponse.redirect("http://localhost:3000?socket_token=" + socketToken);
     } catch (err: any) {
         console.error("❌ Streamlabs Token Exchange Error:", err.response?.data || err.message);
         return NextResponse.json(
